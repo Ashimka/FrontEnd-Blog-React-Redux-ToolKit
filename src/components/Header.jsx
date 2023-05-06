@@ -28,7 +28,12 @@ const Header = () => {
       <Link to="/">Ashimka-blog</Link>
       <div>
         {isAuth ? (
-          <button onClick={handleLogout}>Выход</button>
+          <>
+            <Link to={"/welcome"}>Профиль</Link>
+            <button className="btn-out" onClick={handleLogout}>
+              Выход
+            </button>
+          </>
         ) : (
           <Link to={"/login"}>Войти</Link>
         )}

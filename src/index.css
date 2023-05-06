@@ -46,9 +46,15 @@ a:hover,
 a:focus {
   color: rgba(245, 245, 245, 0.9);
 }
+li {
+  list-style-type: none;
+}
 .header {
   display: flex;
   justify-content: space-between;
+}
+.btn-out {
+  margin-left: 15px;
 }
 /* || LOGIN */
 
@@ -84,4 +90,8 @@ a:focus {
 
 .users ul {
   list-style-type: none;
+}
+.tag-list {
+  display: flex;
+  gap: 20px;
 }

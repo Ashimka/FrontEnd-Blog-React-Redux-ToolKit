@@ -23,7 +23,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     const refreshResult = await baseQuery("/refresh", api, extraOptions);
 
     if (refreshResult?.data) {
-      const email = api.getState().auth.email;
+      const email = api.getState().persistedReducer.auth.email;
       // store the new token
       api.dispatch(setCredentials({ ...refreshResult.data, email }));
       // retry the original query with new access token
