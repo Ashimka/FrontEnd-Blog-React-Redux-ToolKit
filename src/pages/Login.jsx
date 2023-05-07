@@ -1,10 +1,9 @@
 import { useRef, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { setCredentials } from "../features/auth/authSlice";
 import { useLoginMutation } from "../features/auth/authApiSlice";
-import Header from "../components/Header";
 
 const Login = () => {
   const userRef = useRef();
@@ -58,41 +57,49 @@ const Login = () => {
     <h1>Загрузка...</h1>
   ) : (
     <>
-      <Header />
-      <section className="login">
-        <p
-          ref={errRef}
-          className={errMsg ? "errmsg" : "offscreen"}
-          aria-live="assertive"
-        >
-          {errMsg}
-        </p>
+      <div className="container">
+        <div className="login-page">
+          <div className="header">
+            <Link className="btn-logo" to="/">
+              Ashimka-blog
+            </Link>
+          </div>
+          <section className="login">
+            <p
+              ref={errRef}
+              className={errMsg ? "errmsg" : "offscreen"}
+              aria-live="assertive"
+            >
+              {errMsg}
+            </p>
 
-        <h1>Employee Login</h1>
+            <h1>Вход</h1>
 
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="username">Логин:</label>
-          <input
-            type="text"
-            id="username"
-            ref={userRef}
-            value={email}
-            onChange={handleUserInput}
-            autoComplete="off"
-            required
-          />
+            <form onSubmit={handleSubmit}>
+              <label htmlFor="username">Логин:</label>
+              <input
+                type="text"
+                id="username"
+                ref={userRef}
+                value={email}
+                onChange={handleUserInput}
+                autoComplete="off"
+                required
+              />
 
-          <label htmlFor="password">Пароль:</label>
-          <input
-            type="password"
-            id="password"
-            onChange={handlePassInput}
-            value={password}
-            required
-          />
-          <button>Вход</button>
-        </form>
-      </section>
+              <label htmlFor="password">Пароль:</label>
+              <input
+                type="password"
+                id="password"
+                onChange={handlePassInput}
+                value={password}
+                required
+              />
+              <button>Вход</button>
+            </form>
+          </section>
+        </div>
+      </div>
     </>
   );
 
