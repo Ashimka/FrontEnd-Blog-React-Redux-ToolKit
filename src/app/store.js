@@ -13,6 +13,7 @@ import storage from "redux-persist/lib/storage";
 
 import { apiSlice } from "./api/apiSlice";
 import authReducer from "../features/auth/authSlice";
+import registerReducer from "../features/auth/registerSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -29,6 +30,7 @@ const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
     persistedReducer,
+    register: registerReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

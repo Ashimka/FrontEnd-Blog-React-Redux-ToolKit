@@ -17,16 +17,20 @@ const Header = () => {
   const [logoutUser] = useLogoutMutation();
 
   const handleLogout = async () => {
+    navigate("/");
     await logoutUser();
     dispatch(logOut());
-    navigate("/");
   };
 
   return (
     <header className="header">
       <div className="container">
         <div className="header-wrap">
-          <Link to="/">Ashimka-blog</Link>
+          <div className="header__logo">
+            <Link className="link-logo" to="/">
+              Ashimka-blog
+            </Link>
+          </div>
           <div className="header__right">
             {isAuth ? (
               <>

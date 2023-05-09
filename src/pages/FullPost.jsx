@@ -18,7 +18,6 @@ const FullPost = () => {
   if (isLoading) content = <p>"Загрузка..."</p>;
 
   if (isSuccess) {
-    console.log(post);
     content = (
       <>
         <Header />
@@ -38,7 +37,7 @@ const FullPost = () => {
                 <div className="header-name">{post.post.user.fullName}</div>
               </div>
               <div className="post__title">
-                <h2>{post.post.title}</h2>
+                <h2 className="post__title-h2">{post.post.title}</h2>
               </div>
               <div className="post__img">
                 <img

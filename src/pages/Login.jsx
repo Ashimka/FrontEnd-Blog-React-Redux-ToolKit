@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { setCredentials } from "../features/auth/authSlice";
 import { useLoginMutation } from "../features/auth/authApiSlice";
 
+import "./styles/login.css";
+
 const Login = () => {
   const userRef = useRef();
   const errRef = useRef();
@@ -36,15 +38,11 @@ const Login = () => {
       setPassword("");
       navigate("/welcome");
     } catch (error) {
-      if (!error?.originalStatus) {
-        // isLoading: true until timeout occurs
-        setErrMsg("No Server Response");
-      } else if (error.originalStatus === 400) {
-        setErrMsg("Missing Username or Password");
-      } else if (error.originalStatus === 401) {
-        setErrMsg("Unauthorized");
-      } else {
-        setErrMsg("Login Failed");
+      if (!error.response) {
+        setErrMsg("Сервер не отвечает");
+        if (error.status === 400) setErrMsg("Нет имени или пароля");
+        if (error.status === 401) setErrMsg("Неверный логин или пароль");
+        if (error.response) setErrMsg("Ошибка входа");
       }
       errRef.current.focus();
     }
@@ -53,14 +51,18 @@ const Login = () => {
   const handleUserInput = (e) => setEmail(e.target.value);
   const handlePassInput = (e) => setPassword(e.target.value);
 
+  const clickSignUp = () => {
+    navigate("/register");
+  };
+
   const content = isLoading ? (
     <h1>Загрузка...</h1>
   ) : (
     <>
       <div className="container">
         <div className="login-page">
-          <div className="header">
-            <Link className="btn-logo" to="/">
+          <div className="login-header">
+            <Link className="link-logo" to="/">
               Ashimka-blog
             </Link>
           </div>
@@ -73,7 +75,7 @@ const Login = () => {
               {errMsg}
             </p>
 
-            <h1>Вход</h1>
+            <h1 className="login-title">Вход</h1>
 
             <form onSubmit={handleSubmit}>
               <label htmlFor="username">Логин:</label>
@@ -95,7 +97,14 @@ const Login = () => {
                 value={password}
                 required
               />
-              <button>Вход</button>
+              <button className="btn-signin">Вход</button>
+              <button
+                className="btn-signup"
+                type="button"
+                onClick={clickSignUp}
+              >
+                Создать аккаунт
+              </button>
             </form>
           </section>
         </div>
