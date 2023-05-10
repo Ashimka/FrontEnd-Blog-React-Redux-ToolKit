@@ -13,7 +13,7 @@ import storage from "redux-persist/lib/storage";
 
 import { apiSlice } from "./api/apiSlice";
 import authReducer from "../features/auth/authSlice";
-import registerReducer from "../features/auth/registerSlice";
+import { registerApi } from "../features/auth/registerApiSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -29,16 +29,28 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
+    [registerApi.reducerPath]: registerApi.reducer,
     persistedReducer,
-    register: registerReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(apiSlice.middleware),
+    }).concat([apiSlice.middleware, registerApi.middleware]),
 });
 
 export const persistor = persistStore(store);
 export default store;
+
+// if (error.status === 500) {
+//   setErrMsg("Сервер не отвечает");
+// }
+
+// if (error.status === 409) {
+//   setErrMsg("Пользователь с таким email уже существует");
+// }
+
+// if (error.status === 400) {
+//   setErrMsg("Пользователь или пароль не найдены");
+// }
