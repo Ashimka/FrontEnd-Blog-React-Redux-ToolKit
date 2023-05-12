@@ -75,11 +75,6 @@ const Register = () => {
       ) : (
         <div className="container">
           <div className="login-page">
-            <div className="login-header">
-              <Link className="link-logo" to="/">
-                Ashimka-blog
-              </Link>
-            </div>
             <section className="login">
               <p
                 ref={errRef}

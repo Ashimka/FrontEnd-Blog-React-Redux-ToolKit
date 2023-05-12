@@ -1,9 +1,6 @@
-import Header from "../components/Header";
-
 const Public = () => {
   const content = (
     <section className="public">
-      <Header />
       <main>
         <p>
           Расположенный в красивом центре города Фу-Сити, ремонтный магазин

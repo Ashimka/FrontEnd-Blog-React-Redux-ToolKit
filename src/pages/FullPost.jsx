@@ -2,7 +2,6 @@ import React from "react";
 import { useParams } from "react-router-dom";
 
 import { useGetFullPostQuery } from "../features/posts/postsApiSlice";
-import Header from "../components/Header";
 
 import "./styles/home.css";
 
@@ -20,7 +19,6 @@ const FullPost = () => {
   if (isSuccess) {
     content = (
       <>
-        <Header />
         <div className="container">
           <section className="posts">
             <div className="post">

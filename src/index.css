@@ -117,7 +117,12 @@ header {
   align-items: center;
 }
 .btn-out {
+  background: #0077ff;
+  opacity: 0.65;
   margin-left: 15px;
+  color: #ffffff;
+  padding: 0.2rem;
+  border-radius: 5px;
 }
 
 /*  PAGES */

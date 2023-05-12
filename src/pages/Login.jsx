@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { setCredentials } from "../features/auth/authSlice";
@@ -36,7 +36,7 @@ const Login = () => {
 
       setEmail("");
       setPassword("");
-      navigate("/welcome");
+      navigate("/user/me");
     } catch (error) {
       if (!error.response) {
         setErrMsg("Сервер не отвечает");
@@ -61,11 +61,6 @@ const Login = () => {
     <>
       <div className="container">
         <div className="login-page">
-          <div className="login-header">
-            <Link className="link-logo" to="/">
-              Ashimka-blog
-            </Link>
-          </div>
           <section className="login">
             <p
               ref={errRef}

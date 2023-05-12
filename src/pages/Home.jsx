@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { useGetPostsQuery } from "../features/posts/postsApiSlice";
-import Header from "../components/Header";
 
 import "./styles/home.css";
 
@@ -17,7 +16,6 @@ const Home = () => {
   if (isSuccess) {
     content = (
       <>
-        <Header />
         <div className="container">
           <section className="posts">
             {posts.map((post, id) => {
@@ -37,7 +35,7 @@ const Home = () => {
                   </div>
                   <div className="post__title">
                     <Link to={`/post/${post.id}`}>
-                      <h2  className="post__title-h2">{post.title}</h2>
+                      <h2 className="post__title-h2">{post.title}</h2>
                     </Link>
                   </div>
                   <div className="post__img">

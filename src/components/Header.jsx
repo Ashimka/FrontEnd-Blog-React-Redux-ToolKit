@@ -34,7 +34,7 @@ const Header = () => {
           <div className="header__right">
             {isAuth ? (
               <>
-                <Link to={"/welcome"}>
+                <Link to={"/user/me"}>
                   <div className="header-avatar">
                     <img
                       className="avatar-image"

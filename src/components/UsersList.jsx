@@ -1,6 +1,5 @@
 import { useGetUsersQuery } from "../features/users/usersApiSlice";
 import { Link } from "react-router-dom";
-import Header from "./Header";
 
 const UsersList = () => {
   const {
@@ -13,12 +12,11 @@ const UsersList = () => {
 
   let content;
 
-  if (isLoading) {
-    content = <p>"Загрузка..."</p>;
-  } else if (isSuccess) {
+  if (isLoading) content = <p>"Загрузка..."</p>;
+
+  if (isSuccess) {
     content = (
       <>
-        <Header />
         <section className="users">
           <h1>Список пользователей</h1>
           <ul>
@@ -26,12 +24,11 @@ const UsersList = () => {
               return <li key={i}>{user.email}</li>;
             })}
           </ul>
-          <Link to="/welcome">Назад на главную</Link>
+          <Link to="/user/me">Назад</Link>
         </section>
       </>
     );
   } else if (isError) {
-    console.log(error);
     content = <p>{JSON.stringify(error || error.message)}</p>;
   }
 

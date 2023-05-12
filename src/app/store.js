@@ -42,15 +42,3 @@ const store = configureStore({
 
 export const persistor = persistStore(store);
 export default store;
-
-// if (error.status === 500) {
-//   setErrMsg("Сервер не отвечает");
-// }
-
-// if (error.status === 409) {
-//   setErrMsg("Пользователь с таким email уже существует");
-// }
-
-// if (error.status === 400) {
-//   setErrMsg("Пользователь или пароль не найдены");
-// }
