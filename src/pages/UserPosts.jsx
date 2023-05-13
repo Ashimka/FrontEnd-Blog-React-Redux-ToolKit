@@ -1,18 +1,22 @@
 import { Link } from "react-router-dom";
 
-import { useGetPostsQuery } from "../features/posts/postsApiSlice";
+import { useGetUserPostsQuery } from "../features/users/usersApiSlice";
 
-import "./styles/home.css";
-
-const Home = () => {
+const UserPosts = () => {
   const avatarDefault = "profile.png";
   const views = "show.png";
-  const { data: posts, isLoading, isSuccess } = useGetPostsQuery();
+  const {
+    data: posts,
+    isLoading,
+    isSuccess,
+    currentData,
+  } = useGetUserPostsQuery();
+
   let content;
 
   if (isLoading) content = <p>"Загрузка..."</p>;
 
-  if (isSuccess) {
+  if (isSuccess && !currentData?.message) {
     content = (
       <>
         <div className="container">
@@ -70,8 +74,16 @@ const Home = () => {
       </>
     );
   }
+
+  if (currentData?.message) {
+    content = (
+      <div className="container">
+        <div className="post">У вас нет постов</div>
+      </div>
+    );
+  }
+
   return content;
-  //   id, title, text, imageURL, viewsCount
 };
 
-export default Home;
+export default UserPosts;

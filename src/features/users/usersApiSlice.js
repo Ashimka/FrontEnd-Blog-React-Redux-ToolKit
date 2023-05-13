@@ -8,7 +8,11 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     getOneUser: builder.query({
       query: () => `/user/me`,
     }),
+    getUserPosts: builder.query({
+      query: () => "/user/posts",
+    }),
   }),
 });
 
-export const { useGetUsersQuery, useGetOneUserQuery } = usersApiSlice;
+export const { useGetUsersQuery, useGetOneUserQuery, useGetUserPostsQuery } =
+  usersApiSlice;

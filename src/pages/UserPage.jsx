@@ -29,7 +29,7 @@ const UserPage = () => {
             </div>
             <div className="user__options">
               <Link>Добавить пост</Link>
-              <Link>Мои посты</Link>
+              <Link to={"/user/posts"}>Мои посты</Link>
             </div>
             <p>
               <Link to="/user/all">Перейдите к списку пользователей</Link>
