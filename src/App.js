@@ -10,6 +10,7 @@ import FullPost from "./pages/FullPost";
 import Register from "./pages/Register";
 import Unauthorized from "./pages/Unauthorized";
 import UserPosts from "./pages/UserPosts";
+import CreatePost from "./pages/CreatePost";
 
 const ROLES = {
   "admin": 777,
@@ -31,6 +32,7 @@ function App() {
         <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
           <Route path="user/me" element={<UserPage />} />
           <Route path="user/posts" element={<UserPosts />} />
+          <Route path="/post" element={<CreatePost />} />
         </Route>
         {/* protected route for admin */}
         <Route element={<RequireAuth allowedRoles={[ROLES.admin]} />}>

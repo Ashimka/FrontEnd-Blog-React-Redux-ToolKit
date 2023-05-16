@@ -150,3 +150,6 @@ header {
   display: flex;
   gap: 20px;
 }
+.hidden {
+  display: none;
+}

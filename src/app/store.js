@@ -14,6 +14,7 @@ import storage from "redux-persist/lib/storage";
 import { apiSlice } from "./api/apiSlice";
 import authReducer from "../features/auth/authSlice";
 import { registerApi } from "../features/auth/registerApiSlice";
+// import { postsApiSlice } from "../features/posts/postsApiSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -30,6 +31,7 @@ const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
     [registerApi.reducerPath]: registerApi.reducer,
+    // [postsApiSlice.reducerPath]: postsApiSlice.reducer,
     persistedReducer,
   },
   middleware: (getDefaultMiddleware) =>

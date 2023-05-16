@@ -28,7 +28,7 @@ const UserPage = () => {
               <div className="user__name">{user.fullName}</div>
             </div>
             <div className="user__options">
-              <Link>Добавить пост</Link>
+              <Link to={"/post"}>Добавить пост</Link>
               <Link to={"/user/posts"}>Мои посты</Link>
             </div>
             <p>
