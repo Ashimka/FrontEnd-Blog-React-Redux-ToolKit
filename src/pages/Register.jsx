@@ -64,66 +64,62 @@ const Register = () => {
   content = (
     <>
       {isSuccess ? (
-        <div className="container">
-          <section className="login">
-            <h2 className="login-title">Вы зарегистрировались!</h2>
-            <div className="login-subtitle">
-              <Link to={"/login"}>Вход</Link>
-            </div>
-          </section>
-        </div>
-      ) : (
-        <div className="container">
-          <div className="login-page">
-            <section className="login">
-              <p
-                ref={errRef}
-                className={errMsg ? "errmsg" : "offscreen"}
-                aria-live="assertive"
-              >
-                {errMsg}
-              </p>
-              <h1 className="login-title">Регистация</h1>
-              <form onSubmit={handleSubmit}>
-                <label htmlFor="username">Email:</label>
-                <input
-                  type="text"
-                  id="username"
-                  ref={userRef}
-                  value={email}
-                  onChange={handleEmailInput}
-                  autoComplete="off"
-                  required
-                />
-                <label htmlFor="fullname">Никнейм:</label>
-                <input
-                  type="text"
-                  id="fullname"
-                  ref={fullNameRef}
-                  value={fullName}
-                  onChange={handleFullNameInput}
-                  autoComplete="off"
-                  required
-                />
-                <label htmlFor="password">Пароль:</label>
-                <input
-                  type="password"
-                  id="password"
-                  onChange={handlePassordInput}
-                  value={password}
-                  required
-                />
-                <button className="btn-signin">Создать</button>
-                <button
-                  className="btn-signup"
-                  type="button"
-                  onClick={clickSignUp}
-                >
-                  У меня уже есть аккаунт
-                </button>
-              </form>
-            </section>
+        <section className="login">
+          <h2 className="login-title">Вы зарегистрировались!</h2>
+          <div className="login-subtitle">
+            <Link to={"/login"}>Вход</Link>
           </div>
+        </section>
+      ) : (
+        <div className="login-page">
+          <section className="login">
+            <p
+              ref={errRef}
+              className={errMsg ? "errmsg" : "offscreen"}
+              aria-live="assertive"
+            >
+              {errMsg}
+            </p>
+            <h1 className="login-title">Регистация</h1>
+            <form onSubmit={handleSubmit}>
+              <label htmlFor="username">Email:</label>
+              <input
+                type="text"
+                id="username"
+                ref={userRef}
+                value={email}
+                onChange={handleEmailInput}
+                autoComplete="off"
+                required
+              />
+              <label htmlFor="fullname">Никнейм:</label>
+              <input
+                type="text"
+                id="fullname"
+                ref={fullNameRef}
+                value={fullName}
+                onChange={handleFullNameInput}
+                autoComplete="off"
+                required
+              />
+              <label htmlFor="password">Пароль:</label>
+              <input
+                type="password"
+                id="password"
+                onChange={handlePassordInput}
+                value={password}
+                required
+              />
+              <button className="btn-signin">Создать</button>
+              <button
+                className="btn-signup"
+                type="button"
+                onClick={clickSignUp}
+              >
+                У меня уже есть аккаунт
+              </button>
+            </form>
+          </section>
         </div>
       )}
     </>

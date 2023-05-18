@@ -13,29 +13,25 @@ const UserPage = () => {
   if (isSuccess) {
     content = (
       <>
-        <div className="container">
-          <section className="user">
-            <div className="user__header">
-              <div className="user__header-avatar">
-                <img
-                  className="user__avatar-image"
-                  src={`http://localhost:5006/${
-                    user.avatarURL || avatarDefault
-                  }`}
-                  alt="avatar"
-                />
-              </div>
-              <div className="user__name">{user.fullName}</div>
+        <section className="user">
+          <div className="user__header">
+            <div className="user__header-avatar">
+              <img
+                className="user__avatar-image"
+                src={`http://localhost:5006/${user.avatarURL || avatarDefault}`}
+                alt="avatar"
+              />
             </div>
-            <div className="user__options">
-              <Link to={"/post"}>Добавить пост</Link>
-              <Link to={"/user/posts"}>Мои посты</Link>
-            </div>
-            <p>
-              <Link to="/user/all">Перейдите к списку пользователей</Link>
-            </p>
-          </section>
-        </div>
+            <div className="user__name">{user.fullName}</div>
+          </div>
+          <div className="user__options">
+            <Link to={"/post"}>Добавить пост</Link>
+            <Link to={"/user/posts"}>Мои посты</Link>
+          </div>
+          <p>
+            <Link to="/user/all">Перейдите к списку пользователей</Link>
+          </p>
+        </section>
       </>
     );
   }

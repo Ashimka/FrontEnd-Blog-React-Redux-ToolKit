@@ -1,6 +1,11 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
+import SimpleMDE from "react-simplemde-editor";
+
+import "easymde/dist/easymde.min.css";
+import "./styles/createPost.css";
 
 import { useCreateNewPostMutation } from "../features/posts/postsApiSlice";
+import { useCallback } from "react";
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
@@ -11,13 +16,32 @@ const CreatePost = () => {
 
   const imageRef = useRef();
   const titleRef = useRef();
-  const textRef = useRef();
 
   const errRef = useRef();
 
   const [createPost, { isLoading, isSuccess }] = useCreateNewPostMutation();
 
   let content;
+
+  const onChange = useCallback((text) => {
+    setText(text);
+  }, []);
+
+  const options = useMemo(
+    () => ({
+      spellChecker: false,
+      maxHeight: "350px",
+      autofocus: true,
+      placeholder: "Содержимое поста...",
+      status: false,
+      autosave: {
+        enabled: true,
+        uniqueId: "text-blog",
+        delay: 1000,
+      },
+    }),
+    []
+  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,9 +67,9 @@ const CreatePost = () => {
     }
   };
 
+  const CustomInputFile = () => imageRef.current.click();
   const HandleImageInput = (e) => setImageURL(e.target.files[0]);
   const HandleTitleInput = (e) => setTitle(e.target.value);
-  const HandleTextInput = (e) => setText(e.target.value);
 
   if (isLoading) content = <p>Загрузка...</p>;
   if (!isSuccess) content = <p>Пост создан</p>;
@@ -63,14 +87,21 @@ const CreatePost = () => {
           >
             {errMsg}
           </p>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="create-post">
             <label htmlFor="image">
-              Прикрепить изорбажение:
+              <button
+                type="button"
+                className="btn-form-image"
+                onClick={CustomInputFile}
+              >
+                Добавить изорбажение
+              </button>
               <input
                 type="file"
                 id="image"
                 ref={imageRef}
                 onChange={HandleImageInput}
+                hidden
               />
             </label>
             <div className="">
@@ -79,25 +110,19 @@ const CreatePost = () => {
               )}
             </div>
             <label htmlFor="title">
-              Заголовок:
               <input
                 type="text"
+                placeholder="Заголовок:"
                 id="title"
                 ref={titleRef}
                 value={title}
                 onChange={HandleTitleInput}
               />
             </label>
-            <label htmlFor="text">
-              Содержимое поста :
-              <textarea
-                id="text"
-                ref={textRef}
-                value={text}
-                onChange={HandleTextInput}
-              ></textarea>
+            <label htmlFor="simplemde-editor-1">
+              <SimpleMDE value={text} onChange={onChange} options={options} />
             </label>
-            <button>Добавить</button>
+            <button className="btn-form-submit">Добавить</button>
           </form>
         </>
       )}

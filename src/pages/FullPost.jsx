@@ -19,52 +19,50 @@ const FullPost = () => {
   if (isSuccess) {
     content = (
       <>
-        <div className="container">
-          <section className="posts">
-            <div className="post">
-              <div className="post__header">
-                <div className="header-avatar">
-                  <img
-                    className="avatar-image"
-                    src={`http://localhost:5006/${
-                      post.post.user.avatarURL || avatarDefault
-                    }`}
-                    alt="avatar"
-                  />
-                </div>
-                <div className="header-name">{post.post.user.fullName}</div>
-              </div>
-              <div className="post__title">
-                <h2 className="post__title-h2">{post.post.title}</h2>
-              </div>
-              <div className="post__img">
+        <section className="posts">
+          <div className="post">
+            <div className="post__header">
+              <div className="header-avatar">
                 <img
-                  className="post-image"
-                  src={`http://localhost:5006/${post.post.imageURL}`}
-                  alt={post.title}
+                  className="avatar-image"
+                  src={`http://localhost:5006/${
+                    post.post.user.avatarURL || avatarDefault
+                  }`}
+                  alt="avatar"
                 />
               </div>
+              <div className="header-name">{post.post.user.fullName}</div>
+            </div>
+            <div className="post__title">
+              <h2 className="post__title-h2">{post.post.title}</h2>
+            </div>
+            <div className="post__img">
+              <img
+                className="post-image"
+                src={`http://localhost:5006/${post.post.imageURL}`}
+                alt={post.title}
+              />
+            </div>
 
-              <div className="post__text">{post.post.text}</div>
+            <div className="post__text">{post.post.text}</div>
 
-              <div className="post__footer">
-                <div className="post__views">
-                  <img
-                    className="views-image"
-                    src={`http://localhost:5006/${views}`}
-                    alt="views"
-                  />
-                  <span>{post.post.viewsCount}</span>
-                </div>
-                <div className="post__comment">
-                  <span>{post.post.tag_post.tagOne}</span>
-                  <span>{post.post.tag_post.tagTwo}</span>
-                  <span>{post.post.tag_post.tagThree}</span>
-                </div>
+            <div className="post__footer">
+              <div className="post__views">
+                <img
+                  className="views-image"
+                  src={`http://localhost:5006/${views}`}
+                  alt="views"
+                />
+                <span>{post.post.viewsCount}</span>
+              </div>
+              <div className="post__comment">
+                <span>{post.post.tag_post.tagOne}</span>
+                <span>{post.post.tag_post.tagTwo}</span>
+                <span>{post.post.tag_post.tagThree}</span>
               </div>
             </div>
-          </section>
-        </div>
+          </div>
+        </section>
       </>
     );
   }

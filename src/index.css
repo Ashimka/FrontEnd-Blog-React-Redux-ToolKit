@@ -119,7 +119,8 @@ header {
 .header-link {
   color: black;
 }
-.btn-out {
+.btn-out,
+.btn-form-image {
   background: #0077ff;
   opacity: 0.65;
   margin-left: 15px;

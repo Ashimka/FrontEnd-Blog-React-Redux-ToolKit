@@ -59,50 +59,44 @@ const Login = () => {
     <h1>Загрузка...</h1>
   ) : (
     <>
-      <div className="container">
-        <div className="login-page">
-          <section className="login">
-            <p
-              ref={errRef}
-              className={errMsg ? "errmsg" : "offscreen"}
-              aria-live="assertive"
-            >
-              {errMsg}
-            </p>
+      <div className="login-page">
+        <section className="login">
+          <p
+            ref={errRef}
+            className={errMsg ? "errmsg" : "offscreen"}
+            aria-live="assertive"
+          >
+            {errMsg}
+          </p>
 
-            <h1 className="login-title">Вход</h1>
+          <h1 className="login-title">Вход</h1>
 
-            <form onSubmit={handleSubmit}>
-              <label htmlFor="username">Логин:</label>
-              <input
-                type="text"
-                id="username"
-                ref={userRef}
-                value={email}
-                onChange={handleUserInput}
-                autoComplete="off"
-                required
-              />
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="username">Логин:</label>
+            <input
+              type="text"
+              id="username"
+              ref={userRef}
+              value={email}
+              onChange={handleUserInput}
+              autoComplete="off"
+              required
+            />
 
-              <label htmlFor="password">Пароль:</label>
-              <input
-                type="password"
-                id="password"
-                onChange={handlePassInput}
-                value={password}
-                required
-              />
-              <button className="btn-signin">Вход</button>
-              <button
-                className="btn-signup"
-                type="button"
-                onClick={clickSignUp}
-              >
-                Создать аккаунт
-              </button>
-            </form>
-          </section>
-        </div>
+            <label htmlFor="password">Пароль:</label>
+            <input
+              type="password"
+              id="password"
+              onChange={handlePassInput}
+              value={password}
+              required
+            />
+            <button className="btn-signin">Вход</button>
+            <button className="btn-signup" type="button" onClick={clickSignUp}>
+              Создать аккаунт
+            </button>
+          </form>
+        </section>
       </div>
     </>
   );

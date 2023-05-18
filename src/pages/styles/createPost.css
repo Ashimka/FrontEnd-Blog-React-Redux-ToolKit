@@ -1,0 +1,13 @@
+.create-post {
+  width: 800px;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.btn-form-submit {
+  background-color: #0077ff;
+  color: #ffffff;
+  padding: 0.2rem;
+  border-radius: 8px;
+}
