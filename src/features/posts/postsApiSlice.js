@@ -15,6 +15,13 @@ export const postsApiSlice = apiSlice.injectEndpoints({
         body,
       }),
     }),
+    updatePost: builder.mutation({
+      query: (id, body) => ({
+        url: `/post/${id}/edit`,
+        method: "PUT",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -22,33 +29,5 @@ export const {
   useGetPostsQuery,
   useGetFullPostQuery,
   useCreateNewPostMutation,
+  useUpdatePostMutation,
 } = postsApiSlice;
-
-// import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-// export const postsApiSlice = createApi({
-//   reducerPath: "postsApi",
-//   baseQuery: fetchBaseQuery({
-//     baseUrl: "http://localhost:5006/",
-//   }),
-//   endpoints: (builder) => ({
-//     getPosts: builder.query({
-//       query: () => "/",
-//     }),
-//     getFullPost: builder.query({
-//       query: (id) => `/post/${id}`,
-//     }),
-//     createNewPost: builder.mutation({
-//       query: (body) => ({
-//         url: "/post",
-//         method: "POST",
-//         body,
-//       }),
-//     }),
-//   }),
-// });
-// export const {
-//   useGetPostsQuery,
-//   useGetFullPostQuery,
-//   useCreateNewPostMutation,
-// } = postsApiSlice;

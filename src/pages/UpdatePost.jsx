@@ -1,24 +1,31 @@
-import { useState, useRef, useMemo, useCallback } from "react";
+import { useState, useRef, useMemo, useEffect, useCallback } from "react";
+import { useParams } from "react-router-dom";
 import SimpleMDE from "react-simplemde-editor";
+
+import {
+  useUpdatePostMutation,
+  useGetFullPostQuery,
+} from "../features/posts/postsApiSlice";
 
 import "easymde/dist/easymde.min.css";
 import "./styles/createPost.css";
 
-import { useCreateNewPostMutation } from "../features/posts/postsApiSlice";
+const UpdatePost = () => {
+  const { id } = useParams();
+  const { data } = useGetFullPostQuery(id);
+  const [updatePost, { isLoading, isSuccess }] = useUpdatePostMutation();
 
-const CreatePost = () => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
+  const [oldImageURL, setOldImageURL] = useState("");
   const [imageURL, setImageURL] = useState("");
 
   const [errMsg, setErrMsg] = useState("");
 
-  const imageRef = useRef(null);
+  const imageRef = useRef();
   const titleRef = useRef();
 
   const errRef = useRef();
-
-  const [createPost, { isLoading, isSuccess }] = useCreateNewPostMutation();
 
   let content;
 
@@ -42,6 +49,26 @@ const CreatePost = () => {
     []
   );
 
+  // const editPost = () => {
+  //   setTitle(data.post.title);
+  //   setText(data.post.text);
+  //   setOldImageURL(data.post.imageURL);
+  // };
+
+  const editPost = useCallback(() => {
+    if (data) {
+      setTitle(data.post.title);
+      setText(data.post.text);
+      setOldImageURL(data.post.imageURL);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (id && data) {
+      editPost();
+    }
+  }, [id, data, editPost]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -51,12 +78,9 @@ const CreatePost = () => {
       formData.append("title", title);
       formData.append("text", text);
       formData.append("imageURL", imageURL);
+      formData.append("id", id);
 
-      await createPost(formData).unwrap();
-
-      setTitle("");
-      setText("");
-      setImageURL("");
+      await updatePost(id, formData).unwrap();
     } catch (error) {
       console.log(error);
 
@@ -65,8 +89,16 @@ const CreatePost = () => {
       }
     }
   };
-  const HandleImageInput = (e) => setImageURL(e.target.files[0]);
+
+  useEffect(() => {
+    editPost();
+  }, [editPost]);
+
   const CustomInputFile = () => imageRef.current.click();
+  const HandleImageInput = (e) => {
+    setImageURL(e.target.files[0]);
+    setOldImageURL("");
+  };
   const HandleTitleInput = (e) => setTitle(e.target.value);
 
   if (isLoading) content = <p>Загрузка...</p>;
@@ -74,7 +106,7 @@ const CreatePost = () => {
   content = (
     <>
       {isSuccess ? (
-        <p>Пост создан</p>
+        <p>Пост от редактирован</p>
       ) : (
         <>
           <p
@@ -84,7 +116,7 @@ const CreatePost = () => {
           >
             {errMsg}
           </p>
-          <form onSubmit={handleSubmit} className="create-post">
+          <form className="create-post" onSubmit={handleSubmit}>
             <label htmlFor="image">
               <button
                 type="button"
@@ -100,29 +132,37 @@ const CreatePost = () => {
                 onChange={HandleImageInput}
                 hidden
               />
-            </label>
-            <div className="create-post__image">
-              {imageURL && (
-                <>
-                  <button
-                    className="create-post__btn-delete-img"
-                    onClick={() => setImageURL("")}
-                  >
-                    удалить
-                  </button>
+              <div className="create-post__image">
+                {oldImageURL && (
+                  <>
+                    <button
+                      className="create-post__btn-delete-img"
+                      onClick={() => setOldImageURL("")}
+                    >
+                      удалить
+                    </button>
+                    <img
+                      className="post__img"
+                      src={`http://localhost:5006/${oldImageURL}`}
+                      alt={oldImageURL.name}
+                    />
+                  </>
+                )}
+                {imageURL && (
                   <img
                     className="post__img"
                     src={URL.createObjectURL(imageURL)}
                     alt={imageURL.name}
                   />
-                </>
-              )}
-            </div>
+                )}
+              </div>
+            </label>
+
             <label htmlFor="title">
               <input
                 className="create-post__title"
                 type="text"
-                placeholder="  Заголовок"
+                placeholder="Заголовок"
                 id="title"
                 ref={titleRef}
                 value={title}
@@ -132,7 +172,7 @@ const CreatePost = () => {
             <label htmlFor="simplemde-editor-1">
               <SimpleMDE value={text} onChange={onChange} options={options} />
             </label>
-            <button className="btn-form-submit">Добавить</button>
+            <button className="btn-form-submit">Редактировать</button>
           </form>
         </>
       )}
@@ -142,4 +182,4 @@ const CreatePost = () => {
   return content;
 };
 
-export default CreatePost;
+export default UpdatePost;

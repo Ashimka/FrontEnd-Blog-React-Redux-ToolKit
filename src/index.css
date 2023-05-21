@@ -29,7 +29,8 @@ html,
 body {
   font: 1.5rem "Nunito", sans-serif;
   min-height: 100vh;
-  background: #edeef0;
+  /* background: #edeef0; */
+  background-color: #f9f2e3;
   width: 100%;
   font-size: 100%;
   line-height: 1;
@@ -43,6 +44,9 @@ textarea {
 }
 input::-ms-clear {
   display: none;
+}
+input {
+  border: 1.5px solid #c0c0c0;
 }
 button {
   cursor: pointer;

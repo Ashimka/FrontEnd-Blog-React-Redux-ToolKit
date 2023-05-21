@@ -5,6 +5,14 @@
   display: flex;
   align-items: center;
 }
+.header-options {
+  margin-left: auto;
+}
+.header-options-image {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
 .avatar-image {
   width: 20px;
   height: 20px;
@@ -14,6 +22,7 @@
   font-size: 14px;
 }
 .post__title {
+  margin-top: 1rem;
   width: auto;
   padding-bottom: 20px;
   font-size: 20px;

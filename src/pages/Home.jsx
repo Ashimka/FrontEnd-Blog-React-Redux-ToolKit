@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 
 import { useGetPostsQuery } from "../features/posts/postsApiSlice";
 
@@ -37,14 +38,18 @@ const Home = () => {
                   </Link>
                 </div>
                 <div className="post__img">
-                  <img
-                    className="post-image"
-                    src={`http://localhost:5006/${post.imageURL}`}
-                    alt={post.title}
-                  />
+                  {post.imageURL && (
+                    <img
+                      className="post-image"
+                      src={`http://localhost:5006/${post.imageURL}`}
+                      alt={post.title}
+                    />
+                  )}
                 </div>
 
-                <div className="post__text">{post.text}</div>
+                <div className="post__text">
+                  <ReactMarkdown children={post.text} />
+                </div>
 
                 <div className="post__footer">
                   <div className="post__views">

@@ -5,6 +5,7 @@ import { useGetUserPostsQuery } from "../features/users/usersApiSlice";
 const UserPosts = () => {
   const avatarDefault = "profile.png";
   const views = "show.png";
+
   const {
     data: posts,
     isLoading,
@@ -34,6 +35,15 @@ const UserPosts = () => {
                     />
                   </div>
                   <div className="header-name">{post.user.fullName}</div>
+                  <div className="header-options">
+                    <Link to={`/post/${post.id}/edit`}>
+                      <img
+                        className="header-options-image"
+                        src={"http://localhost:5006/edit.png"}
+                        alt={"options"}
+                      />
+                    </Link>
+                  </div>
                 </div>
                 <div className="post__title">
                   <Link to={`/post/${post.id}`}>
@@ -41,11 +51,13 @@ const UserPosts = () => {
                   </Link>
                 </div>
                 <div className="post__img">
-                  <img
-                    className="post-image"
-                    src={`http://localhost:5006/${post.imageURL}`}
-                    alt={post.title}
-                  />
+                  {post.imageURL && (
+                    <img
+                      className="post-image"
+                      src={`http://localhost:5006/${post.imageURL}`}
+                      alt={post.title}
+                    />
+                  )}
                 </div>
 
                 <div className="post__text">{post.text}</div>

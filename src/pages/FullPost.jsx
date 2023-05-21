@@ -1,5 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 
 import { useGetFullPostQuery } from "../features/posts/postsApiSlice";
 
@@ -37,14 +38,18 @@ const FullPost = () => {
               <h2 className="post__title-h2">{post.post.title}</h2>
             </div>
             <div className="post__img">
-              <img
-                className="post-image"
-                src={`http://localhost:5006/${post.post.imageURL}`}
-                alt={post.title}
-              />
+              {post.post.imageURL && (
+                <img
+                  className="post-image"
+                  src={`http://localhost:5006/${post.post.imageURL}`}
+                  alt={post.title}
+                />
+              )}
             </div>
 
-            <div className="post__text">{post.post.text}</div>
+            <div className="post__text">
+              <ReactMarkdown children={post.post.text} />
+            </div>
 
             <div className="post__footer">
               <div className="post__views">
