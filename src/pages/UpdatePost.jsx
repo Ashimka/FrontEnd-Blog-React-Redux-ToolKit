@@ -1,10 +1,11 @@
 import { useState, useRef, useMemo, useEffect, useCallback } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+
 import SimpleMDE from "react-simplemde-editor";
 
 import {
-  useUpdatePostMutation,
   useGetFullPostQuery,
+  useUpdatePostMutation,
 } from "../features/posts/postsApiSlice";
 
 import "easymde/dist/easymde.min.css";
@@ -12,18 +13,18 @@ import "./styles/createPost.css";
 
 const UpdatePost = () => {
   const { id } = useParams();
+
   const { data } = useGetFullPostQuery(id);
   const [updatePost, { isLoading, isSuccess }] = useUpdatePostMutation();
 
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [oldImageURL, setOldImageURL] = useState("");
-  const [imageURL, setImageURL] = useState("");
+  const [newImageURL, setNewImageURL] = useState("");
 
   const [errMsg, setErrMsg] = useState("");
 
   const imageRef = useRef();
-  const titleRef = useRef();
 
   const errRef = useRef();
 
@@ -49,12 +50,6 @@ const UpdatePost = () => {
     []
   );
 
-  // const editPost = () => {
-  //   setTitle(data.post.title);
-  //   setText(data.post.text);
-  //   setOldImageURL(data.post.imageURL);
-  // };
-
   const editPost = useCallback(() => {
     if (data) {
       setTitle(data.post.title);
@@ -73,19 +68,16 @@ const UpdatePost = () => {
     e.preventDefault();
 
     try {
-      const formData = new FormData();
+      await updatePost({ id, title, text, imageURL: newImageURL }).unwrap();
 
-      formData.append("title", title);
-      formData.append("text", text);
-      formData.append("imageURL", imageURL);
-      formData.append("id", id);
-
-      await updatePost(id, formData).unwrap();
+      setTitle("");
+      setText("");
+      setNewImageURL("");
     } catch (error) {
       console.log(error);
 
       if (error.status === 500) {
-        setErrMsg("Заполните поля");
+        setErrMsg("Internal Server Error");
       }
     }
   };
@@ -96,7 +88,7 @@ const UpdatePost = () => {
 
   const CustomInputFile = () => imageRef.current.click();
   const HandleImageInput = (e) => {
-    setImageURL(e.target.files[0]);
+    setNewImageURL(e.target.files[0]);
     setOldImageURL("");
   };
   const HandleTitleInput = (e) => setTitle(e.target.value);
@@ -106,7 +98,10 @@ const UpdatePost = () => {
   content = (
     <>
       {isSuccess ? (
-        <p>Пост от редактирован</p>
+        <>
+          <p>Пост от редактирован</p>
+          <Link to={`/post/${id}`}>Проверить</Link>
+        </>
       ) : (
         <>
           <p
@@ -127,6 +122,7 @@ const UpdatePost = () => {
               </button>
               <input
                 type="file"
+                accept="image/jpeg, image/png, image/gif, image/webp"
                 id="image"
                 ref={imageRef}
                 onChange={HandleImageInput}
@@ -148,12 +144,20 @@ const UpdatePost = () => {
                     />
                   </>
                 )}
-                {imageURL && (
-                  <img
-                    className="post__img"
-                    src={URL.createObjectURL(imageURL)}
-                    alt={imageURL.name}
-                  />
+                {newImageURL && (
+                  <>
+                    <button
+                      className="create-post__btn-delete-img"
+                      onClick={() => setNewImageURL("")}
+                    >
+                      удалить
+                    </button>
+                    <img
+                      className="post__img"
+                      src={URL.createObjectURL(newImageURL)}
+                      alt={newImageURL.name}
+                    />
+                  </>
                 )}
               </div>
             </label>
@@ -164,7 +168,6 @@ const UpdatePost = () => {
                 type="text"
                 placeholder="Заголовок"
                 id="title"
-                ref={titleRef}
                 value={title}
                 onChange={HandleTitleInput}
               />

@@ -60,8 +60,11 @@ const CreatePost = () => {
     } catch (error) {
       console.log(error);
 
+      if (error.status === 400) {
+        setErrMsg("Не заполнен заголовок или содержимое поста");
+      }
       if (error.status === 500) {
-        setErrMsg("Заполните поля");
+        setErrMsg("Internal Server Error");
       }
     }
   };
@@ -95,6 +98,7 @@ const CreatePost = () => {
               </button>
               <input
                 type="file"
+                accept="image/jpeg, image/png, image/gif, image/webp"
                 id="image"
                 ref={imageRef}
                 onChange={HandleImageInput}

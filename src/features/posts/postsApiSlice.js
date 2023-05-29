@@ -9,17 +9,17 @@ export const postsApiSlice = apiSlice.injectEndpoints({
       query: (id) => `/post/${id}`,
     }),
     createNewPost: builder.mutation({
-      query: (body) => ({
+      query: (formData) => ({
         url: "/post",
         method: "POST",
-        body,
+        body: formData,
       }),
     }),
     updatePost: builder.mutation({
-      query: (id, body) => ({
-        url: `/post/${id}/edit`,
-        method: "PUT",
-        body,
+      query: (formUpdata) => ({
+        url: `/post/${formUpdata.id}/edit`,
+        method: "PATCH",
+        body: { ...formUpdata },
       }),
     }),
   }),
