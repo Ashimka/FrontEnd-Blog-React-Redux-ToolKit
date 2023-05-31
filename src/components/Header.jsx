@@ -38,7 +38,7 @@ const Header = () => {
                   <div className="header-avatar">
                     <img
                       className="avatar-image"
-                      src={`http://localhost:5006/${avatarDefault}`}
+                      src={`http://localhost:5006/uploads/${avatarDefault}`}
                       alt={"avatar"}
                     />
                   </div>

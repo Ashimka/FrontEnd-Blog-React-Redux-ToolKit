@@ -6,6 +6,7 @@ import SimpleMDE from "react-simplemde-editor";
 import {
   useGetFullPostQuery,
   useUpdatePostMutation,
+  useUploadImageMutation,
 } from "../features/posts/postsApiSlice";
 
 import "easymde/dist/easymde.min.css";
@@ -16,6 +17,7 @@ const UpdatePost = () => {
 
   const { data } = useGetFullPostQuery(id);
   const [updatePost, { isLoading, isSuccess }] = useUpdatePostMutation();
+  const [fileUpload] = useUploadImageMutation();
 
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
@@ -64,11 +66,32 @@ const UpdatePost = () => {
     }
   }, [id, data, editPost]);
 
+  const HandleImageInput = async (e) => {
+    try {
+      const formData = new FormData();
+
+      formData.append("image", e.target.files[0]);
+
+      const file = await fileUpload(formData).unwrap();
+      setNewImageURL(file.url);
+      setOldImageURL("");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await updatePost({ id, title, text, imageURL: newImageURL }).unwrap();
+      let imageUpdate;
+      if (!newImageURL) {
+        imageUpdate = oldImageURL;
+      }
+      if (newImageURL) {
+        imageUpdate = newImageURL;
+      }
+      await updatePost({ id, title, text, imageURL: imageUpdate }).unwrap();
 
       setTitle("");
       setText("");
@@ -87,10 +110,7 @@ const UpdatePost = () => {
   }, [editPost]);
 
   const CustomInputFile = () => imageRef.current.click();
-  const HandleImageInput = (e) => {
-    setNewImageURL(e.target.files[0]);
-    setOldImageURL("");
-  };
+
   const HandleTitleInput = (e) => setTitle(e.target.value);
 
   if (isLoading) content = <p>Загрузка...</p>;
@@ -111,7 +131,11 @@ const UpdatePost = () => {
           >
             {errMsg}
           </p>
-          <form className="create-post" onSubmit={handleSubmit}>
+          <form
+            className="create-post"
+            onSubmit={handleSubmit}
+            encType="multipart/form-data"
+          >
             <label htmlFor="image">
               <button
                 type="button"
@@ -139,7 +163,7 @@ const UpdatePost = () => {
                     </button>
                     <img
                       className="post__img"
-                      src={`http://localhost:5006/${oldImageURL}`}
+                      src={`http://localhost:5006/uploads/${oldImageURL}`}
                       alt={oldImageURL.name}
                     />
                   </>
@@ -154,7 +178,7 @@ const UpdatePost = () => {
                     </button>
                     <img
                       className="post__img"
-                      src={URL.createObjectURL(newImageURL)}
+                      src={`http://localhost:5006/uploads/${newImageURL}`}
                       alt={newImageURL.name}
                     />
                   </>

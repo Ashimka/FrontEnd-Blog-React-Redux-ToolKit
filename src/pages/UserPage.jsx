@@ -18,7 +18,9 @@ const UserPage = () => {
             <div className="user__header-avatar">
               <img
                 className="user__avatar-image"
-                src={`http://localhost:5006/${user.avatarURL || avatarDefault}`}
+                src={`http://localhost:5006/uploads/${
+                  user.avatarURL || avatarDefault
+                }`}
                 alt="avatar"
               />
             </div>

@@ -26,7 +26,7 @@ const FullPost = () => {
               <div className="header-avatar">
                 <img
                   className="avatar-image"
-                  src={`http://localhost:5006/${
+                  src={`http://localhost:5006/uploads/${
                     post.post.user.avatarURL || avatarDefault
                   }`}
                   alt="avatar"
@@ -41,7 +41,7 @@ const FullPost = () => {
               {post.post.imageURL && (
                 <img
                   className="post-image"
-                  src={`http://localhost:5006/${post.post.imageURL}`}
+                  src={`http://localhost:5006/uploads/${post.post.imageURL}`}
                   alt={post.title}
                 />
               )}
@@ -55,7 +55,7 @@ const FullPost = () => {
               <div className="post__views">
                 <img
                   className="views-image"
-                  src={`http://localhost:5006/${views}`}
+                  src={`http://localhost:5006/uploads/${views}`}
                   alt="views"
                 />
                 <span>{post.post.viewsCount}</span>

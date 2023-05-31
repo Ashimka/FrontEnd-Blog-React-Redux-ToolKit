@@ -4,7 +4,10 @@ import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import "./styles/createPost.css";
 
-import { useCreateNewPostMutation } from "../features/posts/postsApiSlice";
+import {
+  useCreateNewPostMutation,
+  useUploadImageMutation,
+} from "../features/posts/postsApiSlice";
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
@@ -14,11 +17,11 @@ const CreatePost = () => {
   const [errMsg, setErrMsg] = useState("");
 
   const imageRef = useRef(null);
-  const titleRef = useRef();
 
   const errRef = useRef();
 
   const [createPost, { isLoading, isSuccess }] = useCreateNewPostMutation();
+  const [fileUpload] = useUploadImageMutation();
 
   let content;
 
@@ -42,17 +45,30 @@ const CreatePost = () => {
     []
   );
 
+  const HandleImageInput = async (e) => {
+    try {
+      const formData = new FormData();
+
+      formData.append("image", e.target.files[0]);
+
+      const file = await fileUpload(formData).unwrap();
+      setImageURL(file.url);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const formData = new FormData();
+      const postData = {
+        title,
+        text,
+        imageURL,
+      };
 
-      formData.append("title", title);
-      formData.append("text", text);
-      formData.append("imageURL", imageURL);
-
-      await createPost(formData).unwrap();
+      await createPost(postData).unwrap();
 
       setTitle("");
       setText("");
@@ -68,7 +84,6 @@ const CreatePost = () => {
       }
     }
   };
-  const HandleImageInput = (e) => setImageURL(e.target.files[0]);
   const CustomInputFile = () => imageRef.current.click();
   const HandleTitleInput = (e) => setTitle(e.target.value);
 
@@ -87,7 +102,12 @@ const CreatePost = () => {
           >
             {errMsg}
           </p>
-          <form onSubmit={handleSubmit} className="create-post">
+
+          <form
+            onSubmit={handleSubmit}
+            className="create-post"
+            encType="multipart/form-data"
+          >
             <label htmlFor="image">
               <button
                 type="button"
@@ -97,8 +117,9 @@ const CreatePost = () => {
                 Добавить изорбажение
               </button>
               <input
+                name="image"
                 type="file"
-                accept="image/jpeg, image/png, image/gif, image/webp"
+                accept=".jpeg, .jpg, .png, .webp"
                 id="image"
                 ref={imageRef}
                 onChange={HandleImageInput}
@@ -116,7 +137,7 @@ const CreatePost = () => {
                   </button>
                   <img
                     className="post__img"
-                    src={URL.createObjectURL(imageURL)}
+                    src={`http://localhost:5006/uploads${imageURL}`}
                     alt={imageURL.name}
                   />
                 </>
@@ -128,12 +149,11 @@ const CreatePost = () => {
                 type="text"
                 placeholder="  Заголовок"
                 id="title"
-                ref={titleRef}
                 value={title}
                 onChange={HandleTitleInput}
               />
             </label>
-            <label htmlFor="simplemde-editor-1">
+            <label htmlFor="simplemde-editor-2">
               <SimpleMDE value={text} onChange={onChange} options={options} />
             </label>
             <button className="btn-form-submit">Добавить</button>

@@ -8,11 +8,18 @@ export const postsApiSlice = apiSlice.injectEndpoints({
     getFullPost: builder.query({
       query: (id) => `/post/${id}`,
     }),
+    uploadImage: builder.mutation({
+      query: (file) => ({
+        url: "/upload",
+        method: "POST",
+        body: file,
+      }),
+    }),
     createNewPost: builder.mutation({
       query: (formData) => ({
         url: "/post",
         method: "POST",
-        body: formData,
+        body: { ...formData },
       }),
     }),
     updatePost: builder.mutation({
@@ -28,6 +35,7 @@ export const postsApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetPostsQuery,
   useGetFullPostQuery,
+  useUploadImageMutation,
   useCreateNewPostMutation,
   useUpdatePostMutation,
 } = postsApiSlice;

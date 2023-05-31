@@ -24,7 +24,7 @@ const Home = () => {
                   <div className="header-avatar">
                     <img
                       className="avatar-image"
-                      src={`http://localhost:5006/${
+                      src={`http://localhost:5006/uploads/${
                         post.user.avatarURL || avatarDefault
                       }`}
                       alt={"avatar"}
@@ -41,7 +41,7 @@ const Home = () => {
                   {post.imageURL && (
                     <img
                       className="post-image"
-                      src={`http://localhost:5006/${post.imageURL}`}
+                      src={`http://localhost:5006/uploads/${post.imageURL}`}
                       alt={post.title}
                     />
                   )}
@@ -55,7 +55,7 @@ const Home = () => {
                   <div className="post__views">
                     <img
                       className="views-image"
-                      src={`http://localhost:5006/${views}`}
+                      src={`http://localhost:5006/uploads/${views}`}
                       alt="views"
                     />
                     <span>{post.viewsCount}</span>
@@ -74,7 +74,6 @@ const Home = () => {
     );
   }
   return content;
-  //   id, title, text, imageURL, viewsCount
 };
 
 export default Home;
