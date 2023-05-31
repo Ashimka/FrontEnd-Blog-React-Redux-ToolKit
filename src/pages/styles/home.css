@@ -21,6 +21,10 @@
 .header-name {
   font-size: 14px;
 }
+.header-delete-post {
+  margin-left: auto;
+  color: red;
+}
 .post__title {
   margin-top: 1rem;
   width: auto;

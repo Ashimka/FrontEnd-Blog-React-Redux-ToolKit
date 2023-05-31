@@ -30,9 +30,15 @@ const UserPage = () => {
             <Link to={"/post"}>Добавить пост</Link>
             <Link to={"/user/posts"}>Мои посты</Link>
           </div>
-          <p>
-            <Link to="/user/all">Перейдите к списку пользователей</Link>
-          </p>
+          <div className="user__admin">
+            {user.role.admin && (
+              <>
+                <div>
+                  <Link to="/user/all">Списку пользователей</Link>
+                </div>
+              </>
+            )}
+          </div>
         </section>
       </>
     );

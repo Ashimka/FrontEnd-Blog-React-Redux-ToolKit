@@ -29,6 +29,12 @@ export const postsApiSlice = apiSlice.injectEndpoints({
         body: { ...formUpdata },
       }),
     }),
+    removePost: builder.mutation({
+      query: (id) => ({
+        url: `post/${id}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
@@ -38,4 +44,5 @@ export const {
   useUploadImageMutation,
   useCreateNewPostMutation,
   useUpdatePostMutation,
+  useRemovePostMutation,
 } = postsApiSlice;
