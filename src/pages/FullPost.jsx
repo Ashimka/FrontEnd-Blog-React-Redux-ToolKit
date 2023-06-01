@@ -1,17 +1,31 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 
-import { useGetFullPostQuery } from "../features/posts/postsApiSlice";
+import {
+  useGetFullPostQuery,
+  useRemovePostMutation,
+} from "../features/posts/postsApiSlice";
+import { useGetOneUserQuery } from "../features/users/usersApiSlice";
 
 import "./styles/home.css";
 
 const FullPost = () => {
   const params = useParams();
+  const navigate = useNavigate();
+
   const { data: post, isLoading, isSuccess } = useGetFullPostQuery(params.id);
+  const { data: user } = useGetOneUserQuery();
+  const [removePost] = useRemovePostMutation();
 
   const avatarDefault = "profile.png";
   const views = "show.png";
+
+  const handleRemovePost = async (id) => {
+    window.confirm("Удалить пост?");
+    await removePost(id);
+    navigate("/user/me");
+  };
 
   let content;
 
@@ -33,6 +47,14 @@ const FullPost = () => {
                 />
               </div>
               <div className="header-name">{post.post.user.fullName}</div>
+              {user?.role.admin && (
+                <button
+                  onClick={() => handleRemovePost(post.post.id)}
+                  className="header-delete-post"
+                >
+                  delete
+                </button>
+              )}
             </div>
             <div className="post__title">
               <h2 className="post__title-h2">{post.post.title}</h2>

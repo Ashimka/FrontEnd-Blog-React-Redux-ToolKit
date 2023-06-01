@@ -12,6 +12,7 @@ import Unauthorized from "./pages/Unauthorized";
 import UserPosts from "./pages/UserPosts";
 import CreatePost from "./pages/CreatePost";
 import UpdatePost from "./pages/UpdatePost";
+import CreateTags from "./pages/CreateTags";
 
 const ROLES = {
   "admin": 777,
@@ -39,6 +40,7 @@ function App() {
         {/* protected route for admin */}
         <Route element={<RequireAuth allowedRoles={[ROLES.admin]} />}>
           <Route path="user/all" element={<UsersList />} />
+          <Route path="post/tags" element={<CreateTags />} />
         </Route>
       </Route>
     </Routes>

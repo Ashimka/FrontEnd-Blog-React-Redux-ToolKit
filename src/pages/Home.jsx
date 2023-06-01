@@ -1,11 +1,7 @@
 import { Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 
-import {
-  useGetPostsQuery,
-  useRemovePostMutation,
-} from "../features/posts/postsApiSlice";
-import { useGetOneUserQuery } from "../features/users/usersApiSlice";
+import { useGetPostsQuery } from "../features/posts/postsApiSlice";
 
 import "./styles/home.css";
 
@@ -13,13 +9,6 @@ const Home = () => {
   const avatarDefault = "profile.png";
   const views = "show.png";
   const { data: posts, isLoading, isSuccess } = useGetPostsQuery();
-  const { data: user } = useGetOneUserQuery();
-  const [removePost] = useRemovePostMutation();
-
-  const handleRemovePost = async (id) => {
-    window.confirm("Удалить пост?");
-    await removePost(id);
-  };
 
   let content;
 
@@ -43,14 +32,6 @@ const Home = () => {
                     />
                   </div>
                   <div className="header-name">{post.user.fullName}</div>
-                  {user?.role.admin && (
-                    <button
-                      onClick={() => handleRemovePost(post.id)}
-                      className="header-delete-post"
-                    >
-                      delete
-                    </button>
-                  )}
                 </div>
                 <div className="post__title">
                   <Link to={`/post/${post.id}`}>

@@ -62,6 +62,10 @@ const CreatePost = () => {
     e.preventDefault();
 
     try {
+      if (!title || !text) {
+        return setErrMsg("Не заполнен заголовок или содержимое поста");
+      }
+
       const postData = {
         title,
         text,

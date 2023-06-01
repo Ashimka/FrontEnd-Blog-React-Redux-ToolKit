@@ -34,7 +34,10 @@ const UserPage = () => {
             {user.role.admin && (
               <>
                 <div>
-                  <Link to="/user/all">Списку пользователей</Link>
+                  <Link to="/user/all">Список пользователей</Link>
+                </div>
+                <div>
+                  <Link to="/post/tags">Создать тег</Link>
                 </div>
               </>
             )}
