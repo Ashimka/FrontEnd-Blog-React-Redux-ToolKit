@@ -1,6 +1,8 @@
 import { useState, useRef, useMemo, useCallback } from "react";
 import SimpleMDE from "react-simplemde-editor";
 
+import TagsList from "../components/TagsList";
+
 import "easymde/dist/easymde.min.css";
 import "./styles/createPost.css";
 
@@ -160,6 +162,7 @@ const CreatePost = () => {
             <label htmlFor="simplemde-editor-2">
               <SimpleMDE value={text} onChange={onChange} options={options} />
             </label>
+            <TagsList />
             <button className="btn-form-submit">Добавить</button>
           </form>
         </>

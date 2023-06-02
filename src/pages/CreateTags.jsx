@@ -25,7 +25,7 @@ const CreateTags = () => {
       await createTag({ tag }).unwrap();
       setTag("");
     } catch (error) {
-      console.log(error);
+      setErrMsg(error.data.message);
     }
   };
 

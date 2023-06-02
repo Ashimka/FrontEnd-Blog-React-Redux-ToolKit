@@ -72,9 +72,9 @@ const UserPosts = () => {
                     <span>{post.viewsCount}</span>
                   </div>
                   <div className="post__comment">
-                    <span>{post.tag_post.tagOne}</span>
-                    <span>{post.tag_post.tagTwo}</span>
-                    <span>{post.tag_post.tagThree}</span>
+                    {post.tag_post?.tags.split(",").map((tag, index) => {
+                      return <span key={index}>{tag}</span>;
+                    })}
                   </div>
                 </div>
               </div>

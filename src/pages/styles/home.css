@@ -1,5 +1,6 @@
 .post {
   margin-top: 1.5rem;
+  min-width: 300px;
 }
 .post__header {
   display: flex;

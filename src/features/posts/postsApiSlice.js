@@ -60,6 +60,9 @@ export const postsApiSlice = apiSlice.injectEndpoints({
         body: { ...tag },
       }),
     }),
+    getTagsList: builder.query({
+      query: () => "/post/tags",
+    }),
   }),
 });
 
@@ -71,4 +74,5 @@ export const {
   useUpdatePostMutation,
   useRemovePostMutation,
   useCreateTagsMutation,
+  useGetTagsListQuery,
 } = postsApiSlice;

@@ -83,9 +83,9 @@ const FullPost = () => {
                 <span>{post.post.viewsCount}</span>
               </div>
               <div className="post__comment">
-                <span>{post.post.tag_post.tagOne}</span>
-                <span>{post.post.tag_post.tagTwo}</span>
-                <span>{post.post.tag_post.tagThree}</span>
+                {post.post.tag_post?.tags.split(",").map((tag, index) => {
+                  return <span key={index}>{tag}</span>;
+                })}
               </div>
             </div>
           </div>
