@@ -1,20 +1,21 @@
 import { useState, useRef, useMemo, useCallback } from "react";
 import SimpleMDE from "react-simplemde-editor";
 
-import TagsList from "../components/TagsList";
-
 import "easymde/dist/easymde.min.css";
 import "./styles/createPost.css";
 
 import {
   useCreateNewPostMutation,
   useUploadImageMutation,
+  useGetTagsListQuery,
 } from "../features/posts/postsApiSlice";
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [imageURL, setImageURL] = useState("");
+  const [tagsPost, setTagsPost] = useState([]);
+  const [searchTag, setSearchTag] = useState("");
 
   const [errMsg, setErrMsg] = useState("");
 
@@ -24,6 +25,15 @@ const CreatePost = () => {
 
   const [createPost, { isLoading, isSuccess }] = useCreateNewPostMutation();
   const [fileUpload] = useUploadImageMutation();
+  const { data: tags } = useGetTagsListQuery();
+
+  const filterTags = tags?.filter((tagList) => {
+    return tagList.tag.toLowerCase().includes(searchTag.toLowerCase());
+  });
+
+  const getTags = (e) => {
+    setTagsPost([...tagsPost, e.target.innerText]);
+  };
 
   let content;
 
@@ -72,6 +82,7 @@ const CreatePost = () => {
         title,
         text,
         imageURL,
+        tags: tagsPost.join(),
       };
 
       await createPost(postData).unwrap();
@@ -79,6 +90,7 @@ const CreatePost = () => {
       setTitle("");
       setText("");
       setImageURL("");
+      setTagsPost("");
     } catch (error) {
       console.log(error);
 
@@ -162,7 +174,32 @@ const CreatePost = () => {
             <label htmlFor="simplemde-editor-2">
               <SimpleMDE value={text} onChange={onChange} options={options} />
             </label>
-            <TagsList />
+            <div className="block-tags">
+              <input
+                type="text"
+                className="block-tags__input"
+                placeholder="Введите название тега"
+                onChange={(e) => setSearchTag(e.target.value)}
+              />
+              <div className="block-tags__out">
+                {tagsPost &&
+                  tagsPost.map((tag, index) => {
+                    return <span key={index}>{tag}</span>;
+                  })}
+              </div>
+
+              <div className="block-tags__list">
+                <ul className="tags-list" onClick={getTags}>
+                  {filterTags?.map((tag, index) => {
+                    return (
+                      <li className="tag-item" key={index} value={tag.tag}>
+                        {tag.tag}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </div>
             <button className="btn-form-submit">Добавить</button>
           </form>
         </>
