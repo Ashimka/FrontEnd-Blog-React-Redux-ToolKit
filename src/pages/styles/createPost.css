@@ -42,17 +42,22 @@
   padding-left: 0.5rem;
 }
 .block-tags__out {
-  width: 100%;
   border-radius: 0.2rem;
   padding-left: 0.5rem;
-  /* background-color: #ffffff;
-  padding: 0.5rem; */
-
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
 }
+.tag-out {
+  background-color: #0077ff;
+  color: #ffffff;
+  padding: 0.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
 .block-tags__list {
-  height: 100px;
+  max-height: 100px;
+  min-width: 160px;
   overflow: auto;
   background-color: #ffffff;
   padding: 0.5rem;
@@ -62,4 +67,7 @@
   flex-direction: column;
   gap: 0.5rem;
   cursor: pointer;
+}
+.tag-item:hover {
+  font-weight: 600;
 }

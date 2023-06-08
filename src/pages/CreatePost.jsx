@@ -35,6 +35,10 @@ const CreatePost = () => {
     setTagsPost([...tagsPost, e.target.innerText]);
   };
 
+  const removeTags = (e) => {
+    setTagsPost(tagsPost.filter((tag) => tag !== e.target.innerText));
+  };
+
   let content;
 
   const onChange = useCallback((text) => {
@@ -104,6 +108,7 @@ const CreatePost = () => {
   };
   const CustomInputFile = () => imageRef.current.click();
   const HandleTitleInput = (e) => setTitle(e.target.value);
+  const HandleSearchTag = (e) => setSearchTag(e.target.value);
 
   if (isLoading) content = <p>Загрузка...</p>;
 
@@ -179,12 +184,16 @@ const CreatePost = () => {
                 type="text"
                 className="block-tags__input"
                 placeholder="Введите название тега"
-                onChange={(e) => setSearchTag(e.target.value)}
+                onChange={HandleSearchTag}
               />
-              <div className="block-tags__out">
+              <div className="block-tags__out" onClick={removeTags}>
                 {tagsPost &&
                   tagsPost.map((tag, index) => {
-                    return <span key={index}>{tag}</span>;
+                    return (
+                      <span className="tag-out" key={index}>
+                        {tag}
+                      </span>
+                    );
                   })}
               </div>
 
