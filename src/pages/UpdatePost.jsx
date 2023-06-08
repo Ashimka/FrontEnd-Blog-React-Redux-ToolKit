@@ -7,6 +7,7 @@ import {
   useGetFullPostQuery,
   useUpdatePostMutation,
   useUploadImageMutation,
+  useGetTagsListQuery,
 } from "../features/posts/postsApiSlice";
 
 import "easymde/dist/easymde.min.css";
@@ -18,11 +19,14 @@ const UpdatePost = () => {
   const { data } = useGetFullPostQuery(id);
   const [updatePost, { isLoading, isSuccess }] = useUpdatePostMutation();
   const [fileUpload] = useUploadImageMutation();
+  const { data: postTags } = useGetTagsListQuery();
 
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [oldImageURL, setOldImageURL] = useState("");
   const [newImageURL, setNewImageURL] = useState("");
+  const [tagsPost, setTagsPost] = useState([]);
+  const [searchTag, setSearchTag] = useState("");
 
   const [errMsg, setErrMsg] = useState("");
 
@@ -51,12 +55,14 @@ const UpdatePost = () => {
     }),
     []
   );
+  console.log(tagsPost);
 
   const editPost = useCallback(() => {
     if (data) {
       setTitle(data.post.title);
       setText(data.post.text);
       setOldImageURL(data.post.imageURL);
+      setTagsPost(data.post.tag_post.tags.split(","));
     }
   }, [data]);
 
@@ -80,6 +86,18 @@ const UpdatePost = () => {
     }
   };
 
+  const filterTags = postTags?.filter((tagList) => {
+    return tagList.tag.toLowerCase().includes(searchTag.toLowerCase());
+  });
+
+  const getTags = (e) => {
+    setTagsPost([...tagsPost, e.target.innerText]);
+  };
+
+  const removeTags = (e) => {
+    setTagsPost(tagsPost.filter((tag) => tag !== e.target.innerText));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -91,11 +109,18 @@ const UpdatePost = () => {
       if (newImageURL) {
         imageUpdate = newImageURL;
       }
-      await updatePost({ id, title, text, imageURL: imageUpdate }).unwrap();
+      await updatePost({
+        id,
+        title,
+        text,
+        imageURL: imageUpdate,
+        tags: tagsPost.join(),
+      }).unwrap();
 
       setTitle("");
       setText("");
       setNewImageURL("");
+      setTagsPost("");
     } catch (error) {
       console.log(error);
 
@@ -112,6 +137,8 @@ const UpdatePost = () => {
   const CustomInputFile = () => imageRef.current.click();
 
   const HandleTitleInput = (e) => setTitle(e.target.value);
+
+  const HandleSearchTag = (e) => setSearchTag(e.target.value);
 
   if (isLoading) content = <p>Загрузка...</p>;
 
@@ -199,6 +226,36 @@ const UpdatePost = () => {
             <label htmlFor="simplemde-editor-1">
               <SimpleMDE value={text} onChange={onChange} options={options} />
             </label>
+            <div className="block-tags">
+              <input
+                type="text"
+                className="block-tags__input"
+                placeholder="Введите название тега"
+                onChange={HandleSearchTag}
+              />
+              <div className="block-tags__out" onClick={removeTags}>
+                {tagsPost &&
+                  tagsPost?.map((tag, index) => {
+                    return (
+                      <span className="tag-out" key={index}>
+                        {tag}
+                      </span>
+                    );
+                  })}
+              </div>
+
+              <div className="block-tags__list">
+                <ul className="tags-list" onClick={getTags}>
+                  {filterTags?.map((tag, index) => {
+                    return (
+                      <li className="tag-item" key={index} value={tag.tag}>
+                        {tag.tag}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </div>
             <button className="btn-form-submit">Редактировать</button>
           </form>
         </>
