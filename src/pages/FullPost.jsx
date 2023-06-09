@@ -20,6 +20,7 @@ const FullPost = () => {
 
   const avatarDefault = "profile.png";
   const views = "show.png";
+  const comment = "comment.png";
 
   const handleRemovePost = async (id) => {
     window.confirm("Удалить пост?");
@@ -82,12 +83,32 @@ const FullPost = () => {
                 />
                 <span>{post.post.viewsCount}</span>
               </div>
-              <div className="post__comment">
+              <div className="post__tags">
                 {post.post.tag_post?.tags.split(",").map((tag, index) => {
                   return <span key={index}>{tag}</span>;
                 })}
               </div>
             </div>
+            <div className="post__comment">
+              <div>Комментарии:</div>
+              {post.post.comments?.map((comm, index) => {
+                return (
+                  <div className="comment-item" key={index}>
+                    {comm.text}
+                  </div>
+                );
+              })}
+            </div>
+            <button
+              className="comment-btn"
+              onClick={() => navigate(`/post/${params.id}/comments`)}
+            >
+              <img
+                className="image-comment-btn"
+                src={`http://localhost:5006/uploads/${comment}`}
+                alt="comment"
+              />
+            </button>
           </div>
         </section>
       </>

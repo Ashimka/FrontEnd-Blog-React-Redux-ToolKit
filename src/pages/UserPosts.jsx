@@ -71,7 +71,7 @@ const UserPosts = () => {
                     />
                     <span>{post.viewsCount}</span>
                   </div>
-                  <div className="post__comment">
+                  <div className="post__tags">
                     {post.tag_post?.tags.split(",").map((tag, index) => {
                       return <span key={index}>{tag}</span>;
                     })}

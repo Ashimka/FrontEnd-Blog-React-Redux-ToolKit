@@ -70,8 +70,22 @@
   width: 16px;
   height: 16px;
 }
-.post__comment {
+.post__tags {
   display: flex;
   gap: 15px;
   justify-content: space-between;
+}
+.post__comment {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.comment-btn {
+  backgroung-color: #f9f2e3;
+  margin: 1rem 0;
+}
+.image-comment-btn {
+  width: 32px;
+  height: 32px;
 }
