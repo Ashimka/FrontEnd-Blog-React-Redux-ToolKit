@@ -96,3 +96,8 @@
 .comments-text {
   margin-top: 20px;
 }
+.delete-comment {
+  margin-left: auto;
+  color: red;
+  cursor: pointer;
+}

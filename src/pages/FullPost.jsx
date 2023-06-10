@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 import {
   useGetFullPostQuery,
   useRemovePostMutation,
+  useRemoveCommentMutation,
 } from "../features/posts/postsApiSlice";
 import { useGetOneUserQuery } from "../features/users/usersApiSlice";
 
@@ -17,6 +18,7 @@ const FullPost = () => {
   const { data: post, isLoading, isSuccess } = useGetFullPostQuery(params.id);
   const { data: user } = useGetOneUserQuery();
   const [removePost] = useRemovePostMutation();
+  const [removeComment] = useRemoveCommentMutation();
 
   const avatarDefault = "profile.png";
   const views = "show.png";
@@ -26,6 +28,11 @@ const FullPost = () => {
     window.confirm("Удалить пост?");
     await removePost(id);
     navigate("/user/me");
+  };
+
+  const handleRemoveComment = async (id) => {
+    window.confirm("Удалить комментарий?");
+    await removeComment(id);
   };
 
   let content;
@@ -103,6 +110,14 @@ const FullPost = () => {
                         alt="avatar"
                       />
                       <div className="comment-name">{comm.user.fullName}</div>
+                      {user?.role.admin && (
+                        <div
+                          onClick={() => handleRemoveComment(comm.id)}
+                          className="delete-comment"
+                        >
+                          x
+                        </div>
+                      )}
                     </div>
                     <div className="comments-text">{comm.text}</div>
                   </div>
