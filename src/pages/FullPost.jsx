@@ -94,7 +94,17 @@ const FullPost = () => {
               {post.post.comments?.map((comm, index) => {
                 return (
                   <div className="comment-item" key={index}>
-                    {comm.text}
+                    <div className="comment-avatar">
+                      <img
+                        className="avatar-image"
+                        src={`http://localhost:5006/uploads/${
+                          comm.user.avatarURL || avatarDefault
+                        }`}
+                        alt="avatar"
+                      />
+                      <div className="comment-name">{comm.user.fullName}</div>
+                    </div>
+                    <div className="comments-text">{comm.text}</div>
                   </div>
                 );
               })}
