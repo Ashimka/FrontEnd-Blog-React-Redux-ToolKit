@@ -11,8 +11,19 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     getUserPosts: builder.query({
       query: () => "/user/posts",
     }),
+    updateAvatarUser: builder.mutation({
+      query: (avatar) => ({
+        url: `/user/profile`,
+        method: "PATCH",
+        body: { ...avatar },
+      }),
+    }),
   }),
 });
 
-export const { useGetUsersQuery, useGetOneUserQuery, useGetUserPostsQuery } =
-  usersApiSlice;
+export const {
+  useGetUsersQuery,
+  useGetOneUserQuery,
+  useGetUserPostsQuery,
+  useUpdateAvatarUserMutation,
+} = usersApiSlice;

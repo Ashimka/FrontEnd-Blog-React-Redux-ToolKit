@@ -29,6 +29,7 @@ const UserPage = () => {
           <div className="user__options">
             <Link to={"/post"}>Добавить пост</Link>
             <Link to={"/user/posts"}>Мои посты</Link>
+            <Link to={"/user/profile"}>Редактировать</Link>
           </div>
           <div className="user__admin">
             {user.role.admin && (

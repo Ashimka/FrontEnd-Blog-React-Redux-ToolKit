@@ -5,6 +5,7 @@ import RequireAuth from "./components/RequireAuth";
 import UserPage from "./pages/UserPage";
 import Login from "./pages/Login";
 import UsersList from "./components/UsersList";
+import UserAvatar from "./components/UserAvatar";
 import Home from "./pages/Home";
 import FullPost from "./pages/FullPost";
 import Register from "./pages/Register";
@@ -35,6 +36,7 @@ function App() {
         <Route element={<RequireAuth allowedRoles={[ROLES.user]} />}>
           <Route path="user/me" element={<UserPage />} />
           <Route path="user/posts" element={<UserPosts />} />
+          <Route path="user/profile" element={<UserAvatar />} />
           <Route path="/post" element={<CreatePost />} />
           <Route path="/post/:id/edit" element={<UpdatePost />} />
           <Route path="/post/:id/comments" element={<CreateComment />} />

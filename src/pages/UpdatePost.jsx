@@ -55,7 +55,6 @@ const UpdatePost = () => {
     }),
     []
   );
-  console.log(tagsPost);
 
   const editPost = useCallback(() => {
     if (data) {
