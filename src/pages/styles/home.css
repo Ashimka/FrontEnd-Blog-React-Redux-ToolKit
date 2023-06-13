@@ -101,3 +101,8 @@
   color: red;
   cursor: pointer;
 }
+.post__comment-count {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}

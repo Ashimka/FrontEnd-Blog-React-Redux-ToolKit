@@ -8,6 +8,8 @@ import "./styles/home.css";
 const Home = () => {
   const avatarDefault = "profile.png";
   const views = "show.png";
+  const comment = "comment.png";
+
   const { data: posts, isLoading, isSuccess } = useGetPostsQuery();
 
   let content;
@@ -60,6 +62,14 @@ const Home = () => {
                       alt="views"
                     />
                     <span>{post.viewsCount}</span>
+                  </div>
+                  <div className="post__comment-count">
+                    <img
+                      className="image-comment-btn"
+                      src={`http://localhost:5006/uploads/${comment}`}
+                      alt="comment"
+                    />
+                    <span>{post?.comments.length}</span>
                   </div>
                   <div className="post__tags">
                     {post.tag_post?.tags.split(",").map((tag, index) => {
