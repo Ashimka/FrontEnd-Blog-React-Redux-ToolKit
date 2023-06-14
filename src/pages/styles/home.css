@@ -5,6 +5,7 @@
 .post__header {
   display: flex;
   align-items: center;
+  gap: 0.5rem;
 }
 .header-options {
   margin-left: auto;
@@ -17,9 +18,9 @@
 .avatar-image {
   width: 20px;
   height: 20px;
-  margin-right: 8px;
 }
-.header-name {
+.header-name,
+.header-time {
   font-size: 14px;
 }
 .header-delete-post {
@@ -91,6 +92,7 @@
 .comment-avatar {
   display: flex;
   align-items: center;
+  gap: 0.5rem;
   line-height: 0;
 }
 .comments-text {
@@ -105,4 +107,14 @@
   display: flex;
   align-items: center;
   gap: 5px;
+}
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  background-color: #13233d;
+}
+.footer__centr {
+  color: #fff;
 }

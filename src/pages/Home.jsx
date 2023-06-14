@@ -34,6 +34,7 @@ const Home = () => {
                     />
                   </div>
                   <div className="header-name">{post.user.fullName}</div>
+                  <div className="header-time">{post.date}</div>
                 </div>
                 <div className="post__title">
                   <Link to={`/post/${post.id}`}>

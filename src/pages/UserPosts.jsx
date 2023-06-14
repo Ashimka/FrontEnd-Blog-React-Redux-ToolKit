@@ -5,6 +5,7 @@ import { useGetUserPostsQuery } from "../features/users/usersApiSlice";
 const UserPosts = () => {
   const avatarDefault = "profile.png";
   const views = "show.png";
+  const comment = "comment.png";
 
   const {
     data: posts,
@@ -35,6 +36,7 @@ const UserPosts = () => {
                     />
                   </div>
                   <div className="header-name">{post.user.fullName}</div>
+                  <div className="header-time">{post.date}</div>
                   <div className="header-options">
                     <Link to={`/post/${post.id}/edit`}>
                       <img
@@ -70,6 +72,14 @@ const UserPosts = () => {
                       alt="views"
                     />
                     <span>{post.viewsCount}</span>
+                  </div>
+                  <div className="post__comment-count">
+                    <img
+                      className="image-comment-btn"
+                      src={`http://localhost:5006/uploads/${comment}`}
+                      alt="comment"
+                    />
+                    <span>{post?.comments.length}</span>
                   </div>
                   <div className="post__tags">
                     {post.tag_post?.tags.split(",").map((tag, index) => {

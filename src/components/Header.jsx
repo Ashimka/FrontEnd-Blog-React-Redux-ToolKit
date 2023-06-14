@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { logOut } from "../features/auth/authSlice";
 import { useLogoutMutation } from "../features/auth/authApiSlice";
+import { useGetOneUserQuery } from "../features/users/usersApiSlice";
 
 const Header = () => {
   const isAuth = Boolean(
@@ -15,6 +16,7 @@ const Header = () => {
   const dispatch = useDispatch();
 
   const [logoutUser] = useLogoutMutation();
+  const { data: user } = useGetOneUserQuery();
 
   const handleLogout = async () => {
     navigate("/");
@@ -38,7 +40,9 @@ const Header = () => {
                   <div className="header-avatar">
                     <img
                       className="avatar-image"
-                      src={`http://localhost:5006/uploads/${avatarDefault}`}
+                      src={`http://localhost:5006/uploads/${
+                        user?.avatarURL || avatarDefault
+                      }`}
                       alt={"avatar"}
                     />
                   </div>

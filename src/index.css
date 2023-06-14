@@ -29,7 +29,6 @@ html,
 body {
   font: 1.5rem "Nunito", sans-serif;
   min-height: 100vh;
-  /* background: #edeef0; */
   background-color: #f9f2e3;
   width: 100%;
   font-size: 100%;
@@ -132,25 +131,10 @@ header {
   padding: 0.2rem;
   border-radius: 5px;
 }
+.main {
+  flex: 1 1 auto;
+}
 
-/*  PAGES */
-
-.public,
-.welcome,
-.users {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-.public main {
-  flex-grow: 1;
-  border-top: 2px solid #fff;
-  border-bottom: 2px solid #fff;
-  padding: 1rem;
-}
-.users ul {
-  list-style-type: none;
-}
 .tag-list {
   display: flex;
   gap: 20px;
