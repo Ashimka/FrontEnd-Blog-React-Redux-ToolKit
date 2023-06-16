@@ -1,20 +1,29 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import { useUploadImageMutation } from "../features/posts/postsApiSlice";
-import { useUpdateAvatarUserMutation } from "../features/users/usersApiSlice";
+import {
+  useUpdateAvatarUserMutation,
+  useGetOneUserQuery,
+} from "../features/users/usersApiSlice";
 
 const UserAvatar = () => {
   const [avatar, setAvatar] = useState("");
+  const [oldAvatar, setOldAvatar] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
   const imageRef = useRef(null);
   const errRef = useRef();
 
+  const { data: user } = useGetOneUserQuery();
   const [fileUpload] = useUploadImageMutation();
   const [createAvatar, { isLoading, isSuccess }] =
     useUpdateAvatarUserMutation();
 
   let content;
+
+  useEffect(() => {
+    setOldAvatar(user?.avatarURL);
+  }, [user]);
 
   const HandleImageInput = async (e) => {
     try {
@@ -63,26 +72,49 @@ const UserAvatar = () => {
           >
             {errMsg}
           </p>
-          <form encType="multipart/form-data" onSubmit={handleSubmit}>
-            <label htmlFor="image">
-              <button
-                type="button"
-                className="btn-form-image"
-                onClick={CustomInputFile}
-              >
-                Добавить изорбажение
-              </button>
-              <input
-                name="image"
-                type="file"
-                accept=".jpeg, .jpg, .png, .webp"
-                id="image"
-                ref={imageRef}
-                onChange={HandleImageInput}
-                hidden
-              />
-            </label>
+          <form
+            className="avatar-form"
+            encType="multipart/form-data"
+            onSubmit={handleSubmit}
+          >
             <div className="create-post__image">
+              {oldAvatar && (
+                <>
+                  <button
+                    className="create-post__btn-delete-img"
+                    onClick={() => setOldAvatar("")}
+                  >
+                    удалить
+                  </button>
+                  <img
+                    className="post__img"
+                    src={`http://localhost:5006/uploads/${oldAvatar}`}
+                    alt={oldAvatar.name}
+                  />
+                </>
+              )}
+              {!avatar && !oldAvatar && (
+                <>
+                  <label htmlFor="image">
+                    <button
+                      type="button"
+                      className="btn-form-image"
+                      onClick={CustomInputFile}
+                    >
+                      Добавить аватарку
+                    </button>
+                    <input
+                      name="image"
+                      type="file"
+                      accept=".jpeg, .jpg, .png, .webp"
+                      id="image"
+                      ref={imageRef}
+                      onChange={HandleImageInput}
+                      hidden
+                    />
+                  </label>
+                </>
+              )}
               {avatar && (
                 <>
                   <button
@@ -99,7 +131,7 @@ const UserAvatar = () => {
                 </>
               )}
             </div>
-            <button>ok</button>
+            <button className="btn-form-submit">Сохранить</button>
           </form>
         </>
       )}

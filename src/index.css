@@ -142,3 +142,8 @@ header {
 .hidden {
   display: none;
 }
+.avatar-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
